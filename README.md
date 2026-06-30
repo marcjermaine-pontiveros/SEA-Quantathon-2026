@@ -12,29 +12,37 @@
 
 ```
 team-asean-quantathon/
-├── README.md                     ← you are here
-└── external/
-    └── distributed_qml_cc/       ← VENDORED reference (Quandela, MIT) — see its SOURCE.md
+├── README.md                  ← you are here
+└── external/                  ← vendored references (Quandela, MIT) — see each folder's SOURCE.md
+    ├── distributed_qml_cc/    ← Hwang et al. 2024 — distributed QML via classical communication
+    ├── photonic_QCNN/         ← Monbroussou et al. — photonic QCNN with adaptive state injection
+    ├── DQNN/                  ← Chen et al. 2025 — distributed QNN on photonic QC
+    └── runtime_lib/           ← shared dependency for the above
 ```
 
-The team's own content (notebook, etc.) will be added once we decide what to push. 
+The team's own content (notebook, etc.) will be added once we decide what to push.
 
-## Reference baseline — `external/distributed_qml_cc/`
+## Reference reproductions — `external/`
 
-A runnable MerLin reproduction of **Hwang et al. (2024), "Distributed quantum machine learning via classical
-communication"** ([arXiv:2408.16327](https://arxiv.org/abs/2408.16327)) — the paper our architecture builds on.
-It implements our exact spectrum in MerLin (nc / cc / qc = no-comm / classical-comm / quantum-comm).
+Runnable MerLin reproductions from Quandela's
+[`reproduced_papers`](https://github.com/merlinquantum/reproduced_papers). **Not our work** — MIT © 2026
+Quandela; each folder keeps its `LICENSE` and a `SOURCE.md` with the upstream URL and pinned commit.
 
-- **Not our work** — MIT © 2026 Quandela; author Jean Senellart et al. See `external/distributed_qml_cc/SOURCE.md`
-  for provenance (upstream URL, branch, pinned commit) and `LICENSE`.
+| Folder | Paper | arXiv |
+|---|---|---|
+| `distributed_qml_cc` | Hwang et al. (2024) — Distributed QML via classical communication | [2408.16327](https://arxiv.org/abs/2408.16327) |
+| `photonic_QCNN` | Monbroussou et al. — Photonic QCNN with adaptive state injection | [2504.20989](https://arxiv.org/abs/2504.20989) |
+| `DQNN` | Chen et al. (2025) — Distributed QNN on distributed photonic QC | [2505.08474](https://arxiv.org/abs/2505.08474) |
 
+**Running them** (tested on `merlinquantum==0.3.2`, `torch==2.10`):
 ```bash
-cd external/distributed_qml_cc
+cd external/<folder>
 pip install -r requirements.txt
-jupyter notebook notebook.ipynb
+jupyter notebook *.ipynb
 ```
-
-Note: Tested on merlinquantum==0.3.2 and torch==2.10
+- `distributed_qml_cc` and `photonic_QCNN` share `external/runtime_lib` (auto-resolved). Pin
+  `merlinquantum>=0.3,<0.4` if you hit a `MeasurementStrategy` error.
+- `DQNN` uses repo-root-style imports and isn't flat-runnable as-is — see `external/DQNN/SOURCE.md`.
 
 ## License
 
